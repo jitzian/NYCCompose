@@ -1,6 +1,7 @@
 package com.example.nyccompose.dagger.components
 
 import com.example.nyccompose.dagger.modules.NetworkModule
+import com.example.nyccompose.schools.main.viewmodel.MainViewModel
 import dagger.Component
 
 @Component(
@@ -10,7 +11,7 @@ import dagger.Component
 )
 interface ComponentInjector {
 
-
+    fun inject(mainViewModel: MainViewModel)
 
     @Component.Builder
     interface Builder {
