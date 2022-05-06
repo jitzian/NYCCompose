@@ -1,5 +1,6 @@
 package com.example.nyccompose.schools.main.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nyccompose.constants.GlobalConstants.Companion.baseUrl
@@ -9,9 +10,12 @@ import com.example.nyccompose.rest.RestApi
 import com.example.nyccompose.rest.model.SchoolsResult
 import com.example.nyccompose.rest.model.ScoresResult
 import com.example.nyccompose.utils.safeLet
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -41,27 +45,32 @@ class MainViewModel : ViewModel() {
         get() = _data
 
     fun fetchData() = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            if (_data.value == UIState.Empty) {
-                val schools = async {
-                    fetchSchools()
-                }
-
-                val scores = async {
-                    fetchScores()
-                }
-
-                val combinedResult =
-                    safeLet(schools.await(), scores.await()) { safeSchools, safeScores ->
-                        _data.value = UIState.Success(
-                            safeSchools, safeScores
-                        )
+        try {
+            coroutineScope {
+                if (_data.value == UIState.Empty) {
+                    val schools = async(Dispatchers.IO) {
+                        fetchSchools()
                     }
 
-                if (combinedResult == null) {
-                    _data.value = UIState.Error("SOmething went wrong")
+                    val scores = async(Dispatchers.IO) {
+                        fetchScores()
+                    }
+
+                    val combinedResult =
+                        safeLet(schools.await(), scores.await()) { safeSchools, safeScores ->
+                            _data.value = UIState.Success(
+                                safeSchools, safeScores
+                            )
+                        }
+
+                    if (combinedResult == null) {
+                        _data.value = UIState.Error("Something went wrong")
+                    }
                 }
             }
+        } catch (e: Exception) {
+            Log.e(TAG, "fetchData: ${e.message}")
+            _data.value = UIState.Error(e.message ?: "Error Occurred")
         }
     }
 
