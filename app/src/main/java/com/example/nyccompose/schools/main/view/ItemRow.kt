@@ -10,25 +10,25 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
 import com.example.nyccompose.R
+import com.example.nyccompose.rest.model.SchoolsResultItem
 
 @Composable
-@Preview(showBackground = true)
-fun ItemRow() {
+fun ItemRow(data: SchoolsResultItem) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(dimensionResource(id = R.dimen.dimen_8_dp)),
+            .padding(dimensionResource(id = R.dimen.dimen_16_dp)),
         elevation = dimensionResource(id = R.dimen.dimen_4_dp)
     ) {
-        Column {
+        Column(modifier = Modifier.padding(dimensionResource(id = R.dimen.dimen_8_dp))) {
             Text(
-                text = "Clinton School Writers & Artists, M.S. 260",
+                text = data.schoolName ?: stringResource(id = R.string.no_data_available_TEXT),
                 style = MaterialTheme.typography.h6
             )
             Text(
-                text = "About",
+                text = stringResource(id = R.string.about_TEXT),
                 modifier = Modifier.padding(vertical = dimensionResource(id = R.dimen.dimen_8_dp)),
                 style = MaterialTheme.typography.body1
             )
@@ -39,7 +39,8 @@ fun ItemRow() {
                 )
             )
             Text(
-                text = "Students who are prepared for college must have an education that encourages them to take risks as they produce and perform. Our college preparatory curriculum develops writers and has built a tight-knit community. Our school develops students who can think analytically and write creatively. Our arts programming builds on our 25 years of experience in visual, performing arts and music on a middle school level. We partner with New Audience and the Whitney Museum as cultural partners. We are a International Baccalaureate (IB) candidate school that offers opportunities to take college courses at neighboring universities.",
+                text = data.overviewParagraph
+                    ?: stringResource(id = R.string.no_data_available_TEXT),
                 style = MaterialTheme.typography.body2
             )
         }

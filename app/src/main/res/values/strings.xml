@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NYCCompose</string>
+    <string name="no_data_available_TEXT">No data available</string>
+    <string name="about_TEXT">About</string>
 </resources>
