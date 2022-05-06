@@ -8,11 +8,10 @@ import com.example.nyccompose.dagger.modules.NetworkModule
 import com.example.nyccompose.rest.RestApi
 import com.example.nyccompose.rest.model.SchoolsResult
 import com.example.nyccompose.rest.model.ScoresResult
-import kotlinx.coroutines.Dispatchers
+import com.example.nyccompose.utils.safeLet
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -43,14 +42,37 @@ class MainViewModel : ViewModel() {
 
     fun fetchData() = viewModelScope.launch {
         withContext(Dispatchers.IO) {
+            if (_data.value == UIState.Empty) {
+                val schools = async {
+                    fetchSchools()
+                }
 
+                val scores = async {
+                    fetchScores()
+                }
+
+                val combinedResult =
+                    safeLet(schools.await(), scores.await()) { safeSchools, safeScores ->
+                        _data.value = UIState.Success(
+                            safeSchools, safeScores
+                        )
+                    }
+
+                if (combinedResult == null) {
+                    _data.value = UIState.Error("SOmething went wrong")
+                }
+            }
         }
     }
+
+    private suspend fun fetchSchools() = restApi.fetchSchools()
+
+    private suspend fun fetchScores() = restApi.fetchScores()
 
     sealed class UIState {
         object Empty : UIState()
         class Success(val listOfSchools: SchoolsResult, val listOfScores: ScoresResult) : UIState()
-        class Error(message: String)
+        class Error(message: String) : UIState()
     }
 
 }
