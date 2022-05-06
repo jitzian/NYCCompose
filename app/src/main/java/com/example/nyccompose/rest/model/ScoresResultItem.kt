@@ -1,19 +1,31 @@
 package com.example.nyccompose.rest.model
 
-
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class ScoresResultItem(
+class ScoresResultItem {
+
     @SerializedName("dbn")
-    val dbn: String?,
-    @SerializedName("num_of_sat_test_takers")
-    val numOfSatTestTakers: String?,
+    @Expose
+    var dbn: String? = null
+
     @SerializedName("sat_critical_reading_avg_score")
-    val satCriticalReadingAvgScore: String?,
+    @Expose
+    var readingScore: String? = null
+
     @SerializedName("sat_math_avg_score")
-    val satMathAvgScore: String?,
+    @Expose
+    var mathScore: String? = null
+
     @SerializedName("sat_writing_avg_score")
-    val satWritingAvgScore: String?,
+    @Expose
+    var writingScore: String? = null
+
     @SerializedName("school_name")
-    val schoolName: String?
-)
+    @Expose
+    var schoolName: String? = null
+
+    @SerializedName("num_of_sat_test_takers")
+    @Expose
+    var numOfSatTestTakers: String? = null
+}
