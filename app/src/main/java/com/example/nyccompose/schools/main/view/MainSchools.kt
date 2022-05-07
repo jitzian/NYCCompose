@@ -16,7 +16,7 @@ import com.example.nyccompose.ui.common.MainAppBar
 import com.example.nyccompose.ui.common.error.ConnectivityError
 
 @Composable
-fun MainSchoolState(
+fun MainSchoolScreenState(
     mainViewModel: MainViewModel = viewModel()
 ) {
     val data by mainViewModel.data.collectAsState()
@@ -27,7 +27,7 @@ fun MainSchoolState(
             ConnectivityError(message = stringResource(id = R.string.no_data_available_TEXT))
         }
         is MainViewModel.UIState.Success -> {
-            MainSchools(schools = (data as MainViewModel.UIState.Success).listOfSchools)
+            MainSchoolsScreenScreen(schools = (data as MainViewModel.UIState.Success).listOfSchools)
         }
         is MainViewModel.UIState.Error -> {
             ConnectivityError(message = stringResource(id = R.string.an_error_occurred_TEXT))
@@ -36,7 +36,7 @@ fun MainSchoolState(
 }
 
 @Composable
-fun MainSchools(schools: List<SchoolsResultItem>) {
+fun MainSchoolsScreenScreen(schools: List<SchoolsResultItem>) {
     NYCApp {
         Scaffold(
             topBar = {
