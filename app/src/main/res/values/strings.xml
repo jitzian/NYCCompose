@@ -2,6 +2,8 @@
     <string name="app_name">NYCCompose</string>
     <string name="no_data_available_TEXT">No data available</string>
     <string name="about_TEXT">About</string>
-    <string name="no_internet_connection_text">No Internet Connection</string>
-    <string name="an_error_occurred_text">An Error Occurred</string>
+    <string name="no_internet_connection_TEXT">No Internet Connection</string>
+    <string name="an_error_occurred_TEXT">An Error Occurred</string>
+    <string name="back_TEXT">Back</string>
+    <string name="new_york_cities_schools_TEXT">New York City Schools</string>
 </resources>

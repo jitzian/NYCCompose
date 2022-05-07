@@ -34,7 +34,7 @@ fun ConnectivityError(message: String?) {
 
             )
             Text(
-                text = message ?: stringResource(id = R.string.no_internet_connection_text),
+                text = message ?: stringResource(id = R.string.no_internet_connection_TEXT),
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.dimen_16_dp)),
                 style = MaterialTheme.typography.h5
             )

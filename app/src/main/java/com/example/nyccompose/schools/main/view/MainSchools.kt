@@ -30,7 +30,7 @@ fun MainSchoolState(
             MainSchools(schools = (data as MainViewModel.UIState.Success).listOfSchools)
         }
         is MainViewModel.UIState.Error -> {
-            ConnectivityError(message = stringResource(id = R.string.an_error_occurred_text))
+            ConnectivityError(message = stringResource(id = R.string.an_error_occurred_TEXT))
         }
     }
 }
@@ -40,7 +40,7 @@ fun MainSchools(schools: List<SchoolsResultItem>) {
     NYCApp {
         Scaffold(
             topBar = {
-                MainAppBar()
+                MainAppBar(stringResource(id = R.string.new_york_cities_schools_TEXT))
             }
         ) {
             LazyColumn {
