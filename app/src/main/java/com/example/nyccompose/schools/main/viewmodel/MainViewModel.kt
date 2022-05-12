@@ -3,6 +3,7 @@ package com.example.nyccompose.schools.main.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.nyccompose.BaseViewModel
 import com.example.nyccompose.constants.GlobalConstants.Companion.baseUrl
 import com.example.nyccompose.dagger.components.DaggerComponentInjector
 import com.example.nyccompose.dagger.modules.NetworkModule
@@ -19,25 +20,10 @@ import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
-    private val TAG = MainViewModel::class.simpleName
-
-    private val injector = DaggerComponentInjector.builder()
-        .networkModule(NetworkModule(baseUrl))
-        .build()
-
-    private var restApi: RestApi
-
-    @Inject
-    lateinit var retrofit: Retrofit
+class MainViewModel : BaseViewModel() {
 
     init {
-        inject()
-        restApi = retrofit.create(RestApi::class.java)
-    }
-
-    private fun inject() {
-        injector.inject(this)
+        TAG = MainViewModel::class.java.simpleName
     }
 
     private val _data = MutableStateFlow<UIState>(UIState.Empty)
