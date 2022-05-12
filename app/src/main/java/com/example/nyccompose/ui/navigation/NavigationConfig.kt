@@ -1,15 +1,19 @@
 package com.example.nyccompose.ui.navigation
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
+import com.example.nyccompose.schools.detail.view.SchoolDetailScreen
 import com.example.nyccompose.schools.main.view.MainSchoolScreenState
 
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @ExperimentalCoilApi
 @Composable
@@ -18,23 +22,33 @@ fun NavigationConfig() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = NavItem.Main.route
+        startDestination = NavItem.ContentType(Feature.SCHOOLS).route
     ) {
-        composable(NavItem.Main) {
-//            MainScreenState { user, repoName ->
-//                navController.navigate(NavItem.Detail.createNavRoute(user, repoName))
-//            }
-            MainSchoolScreenState()
-        }
-        composable(NavItem.Detail) { backStackEntry ->
-//            DetailScreenState(
-//                user = backStackEntry.findArg(NavArg.User),
-//                repoName = backStackEntry.findArg(NavArg.RepoName),
-//                onUpClick = {
-//                    navController.navigateUp()
-//                }
-//            )
-        }
+        schoolsNav(navController)
+    }
+}
+
+@ExperimentalCoilApi
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
+private fun NavGraphBuilder.schoolsNav(navController: NavController) {
+    composable(NavItem.ContentType(Feature.SCHOOLS)) {
+        MainSchoolScreenState(
+            onSchoolClick = { school ->
+                school.dbn?.let { safeDbn ->
+                    navController.navigate(
+                        NavItem.ContentDetail(Feature.SCHOOLS).createRoute(safeDbn)
+                    )
+                }
+            }
+        )
+    }
+
+//    composable(NavItem.ContentDetail(Feature.SCHOOLS)) {
+//        SchoolDetailScreen()
+//    }
+    composable(NavItem.ContentDetail(Feature.SCHOOLS)) { backStackEntry ->
+        SchoolDetailScreen()
     }
 }
 
@@ -50,8 +64,8 @@ private fun NavGraphBuilder.composable(
     }
 }
 
-private inline fun <reified T> NavBackStackEntry.findArg(arg: NavArg): T {
-    val value = arguments?.get(arg.key)
-    requireNotNull(value = value)
-    return value as T
-}
+//private inline fun <reified T> NavBackStackEntry.findArg(arg: NavArg): T {
+//    val value = arguments?.get(arg.key)
+//    requireNotNull(value = value)
+//    return value as T
+//}

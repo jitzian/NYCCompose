@@ -6,4 +6,5 @@
     <string name="an_error_occurred_TEXT">An Error Occurred</string>
     <string name="back_TEXT">Back</string>
     <string name="new_york_cities_schools_TEXT">New York City Schools</string>
+    <string name="location_TEXT">10 East 15th Street, Manhattan NY 10003 (40.736526, -73.992727)</string>
 </resources>

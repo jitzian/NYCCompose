@@ -2,17 +2,25 @@ package com.example.nyccompose.ui.navigation
 
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import java.util.*
 
 sealed class NavItem(
-    val baseRoute: String,
+    internal val feature: Feature,
+    internal val subRoute: String = "home",
     private val navArgs: List<NavArg> = emptyList()
 ) {
+
+    class ContentType(feature: Feature) : NavItem(feature)
+
+    class ContentDetail(feature: Feature) : NavItem(feature, "detail", listOf(NavArg.Dbn)) {
+        fun createRoute(dbn: String) = "${feature.route}/$subRoute/$dbn"
+    }
+
     val route = run {
         //baseRoute/{arg1}/{arg2}
-
         val argKeys = navArgs.map { "{${it.key}}" }
-        listOf(baseRoute)
+        //listOf(feature.route, subRoute)
+        listOf(feature.route)
+            .plus(subRoute)
             .plus(argKeys)
             .joinToString("/")
     }
@@ -21,13 +29,10 @@ sealed class NavItem(
         navArgument(it.key) { type = it.navType }
     }
 
-    object Main : NavItem(AppDestinations.MAIN.name)
-    object Detail : NavItem(AppDestinations.DETAIL.name, listOf(NavArg.User, NavArg.RepoName)) {
-        fun createNavRoute(user: String, repoName: String) = "$baseRoute/$user/$repoName"
-    }
 }
 
 enum class NavArg(val key: String, val navType: NavType<*>) {
     User("user", NavType.StringType),
-    RepoName("repoName", NavType.StringType)
+    RepoName("repoName", NavType.StringType),
+    Dbn("dbn", NavType.StringType)
 }

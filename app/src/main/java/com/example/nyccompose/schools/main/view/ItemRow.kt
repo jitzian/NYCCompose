@@ -1,5 +1,6 @@
 package com.example.nyccompose.schools.main.view
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,12 +16,18 @@ import com.example.nyccompose.R
 import com.example.nyccompose.rest.model.SchoolsResultItem
 
 @Composable
-fun ItemRow(data: SchoolsResultItem) {
+fun ItemRow(
+    data: SchoolsResultItem,
+    onSchoolClick: (SchoolsResultItem) -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(dimensionResource(id = R.dimen.dimen_16_dp)),
-        elevation = dimensionResource(id = R.dimen.dimen_4_dp)
+            .padding(dimensionResource(id = R.dimen.dimen_16_dp))
+            .clickable {
+                onSchoolClick(data)
+            },
+        elevation = dimensionResource(id = R.dimen.dimen_4_dp),
     ) {
         Column(modifier = Modifier.padding(dimensionResource(id = R.dimen.dimen_8_dp))) {
             Text(

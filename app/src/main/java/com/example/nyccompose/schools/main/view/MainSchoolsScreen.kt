@@ -1,7 +1,9 @@
 package com.example.nyccompose.schools.main.view
 
+import android.util.Log
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -15,19 +17,24 @@ import com.example.nyccompose.ui.app.NYCApp
 import com.example.nyccompose.ui.common.MainAppBar
 import com.example.nyccompose.ui.common.error.ConnectivityError
 
+@ExperimentalMaterialApi
 @Composable
 fun MainSchoolScreenState(
-    mainViewModel: MainViewModel = viewModel()
+    mainViewModel: MainViewModel = viewModel(),
+    onSchoolClick: (SchoolsResultItem) -> Unit
 ) {
+    Log.e("MainSchoolScreenState", "MainSchoolScreenState::$onSchoolClick")
     val data by mainViewModel.data.collectAsState()
     mainViewModel.fetchData()
-
     when (data) {
         is MainViewModel.UIState.Empty -> {
             ConnectivityError(message = stringResource(id = R.string.no_data_available_TEXT))
         }
         is MainViewModel.UIState.Success -> {
-            MainSchoolsScreenScreen(schools = (data as MainViewModel.UIState.Success).listOfSchools)
+            MainSchoolsScreenScreen(
+                schools = (data as MainViewModel.UIState.Success).listOfSchools,
+                onSchoolClick = onSchoolClick
+            )
         }
         is MainViewModel.UIState.Error -> {
             ConnectivityError(message = stringResource(id = R.string.an_error_occurred_TEXT))
@@ -35,8 +42,12 @@ fun MainSchoolScreenState(
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
-fun MainSchoolsScreenScreen(schools: List<SchoolsResultItem>) {
+fun MainSchoolsScreenScreen(
+    schools: List<SchoolsResultItem>,
+    onSchoolClick: (SchoolsResultItem) -> Unit
+) {
     NYCApp {
         Scaffold(
             topBar = {
@@ -45,7 +56,7 @@ fun MainSchoolsScreenScreen(schools: List<SchoolsResultItem>) {
         ) {
             LazyColumn {
                 items(schools) { school ->
-                    ItemRow(data = school)
+                    ItemRow(data = school, onSchoolClick = onSchoolClick)
                 }
             }
         }
