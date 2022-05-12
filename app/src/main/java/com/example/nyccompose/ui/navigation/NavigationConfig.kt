@@ -44,9 +44,6 @@ private fun NavGraphBuilder.schoolsNav(navController: NavController) {
         )
     }
 
-//    composable(NavItem.ContentDetail(Feature.SCHOOLS)) {
-//        SchoolDetailScreen()
-//    }
     composable(NavItem.ContentDetail(Feature.SCHOOLS)) { backStackEntry ->
         SchoolDetailScreen()
     }

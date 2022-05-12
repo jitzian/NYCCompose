@@ -18,6 +18,12 @@ import com.example.nyccompose.ui.app.NYCApp
 import com.example.nyccompose.ui.common.MainAppBar
 
 @Composable
+fun SchoolDetailScreenState() {
+
+}
+
+
+@Composable
 @Preview(showBackground = true)
 //TODO: Remove hardcoded values
 fun SchoolDetailScreen() {
