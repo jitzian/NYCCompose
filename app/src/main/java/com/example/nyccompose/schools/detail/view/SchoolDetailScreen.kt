@@ -22,14 +22,7 @@ import com.example.nyccompose.ui.common.MainAppBar
 //TODO: Remove hardcoded values
 fun SchoolDetailScreen() {
     NYCApp {
-        Scaffold(
-            topBar = {
-                MainAppBar(
-                    title = "Detail Screen",
-                    showBackButton = true
-                )
-            }
-        ) {
+        SchoolDetailScaffold {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()

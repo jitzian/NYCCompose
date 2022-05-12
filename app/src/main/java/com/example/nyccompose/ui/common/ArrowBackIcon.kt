@@ -9,13 +9,16 @@ import androidx.compose.ui.res.stringResource
 import com.example.nyccompose.R
 
 @Composable
-fun ArrowBackIcon(onOpClick: (() -> Unit)? = null) {
-    onOpClick?.let {
-        IconButton(onClick = it) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = stringResource(id = R.string.back_TEXT)
-            )
+//fun ArrowBackIcon(onOpClick: (() -> Unit)? = null) {
+fun ArrowBackIcon() {
+    IconButton(
+        onClick = {
+
         }
+    ) {
+        Icon(
+            imageVector = Icons.Default.ArrowBack,
+            contentDescription = stringResource(id = R.string.back_TEXT)
+        )
     }
 }
