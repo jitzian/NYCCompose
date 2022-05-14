@@ -2,6 +2,8 @@ package com.example.nyccompose.ui.navigation
 
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.example.nyccompose.R
+import com.example.nyccompose.rest.model.SchoolsResultItem
 
 sealed class NavItem(
     internal val feature: Feature,
@@ -34,5 +36,5 @@ sealed class NavItem(
 enum class NavArg(val key: String, val navType: NavType<*>) {
     User("user", NavType.StringType),
     RepoName("repoName", NavType.StringType),
-    Dbn("dbn", NavType.StringType)
+    Dbn("dbn", NavType.StringType),
 }

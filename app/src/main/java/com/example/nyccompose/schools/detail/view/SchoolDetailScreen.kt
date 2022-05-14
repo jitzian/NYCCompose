@@ -5,28 +5,44 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.nyccompose.R
+import com.example.nyccompose.rest.model.SchoolsResultItem
+import com.example.nyccompose.schools.detail.viewmodel.SchoolDetailViewModel
 import com.example.nyccompose.ui.app.NYCApp
-import com.example.nyccompose.ui.common.MainAppBar
+import com.example.nyccompose.ui.common.error.ConnectivityError
 
 @Composable
-fun SchoolDetailScreenState() {
+fun SchoolDetailScreenState(
+    schoolViewModel: SchoolDetailViewModel = viewModel()
+) {
+
+    val state by schoolViewModel.state.collectAsState()
+
+    when (state) {
+        is SchoolDetailViewModel.UIState.Loading -> {
+
+        }
+        is SchoolDetailViewModel.UIState.School -> {
+            SchoolDetailScreen(school = (state as SchoolDetailViewModel.UIState.School).school)
+        }
+        is SchoolDetailViewModel.UIState.Error -> {
+            ConnectivityError(message = (state as SchoolDetailViewModel.UIState.Error).message)
+        }
+    }
 
 }
 
 
 @Composable
-@Preview(showBackground = true)
-//TODO: Remove hardcoded values
-fun SchoolDetailScreen() {
+fun SchoolDetailScreen(school: SchoolsResultItem) {
     NYCApp {
         SchoolDetailScaffold {
             Column(
@@ -35,12 +51,12 @@ fun SchoolDetailScreen() {
                     .padding(dimensionResource(id = R.dimen.dimen_16_dp))
             ) {
                 Text(
-                    text = "Clinton School Writers &amp; Artists, M.S. 260",
+                    text = school.schoolName.toString(),
                     modifier = Modifier.fillMaxWidth(),
                     style = MaterialTheme.typography.h6
                 )
                 Text(
-                    text = "Students who are prepared for college must have an education that encourages them to take risks as they produce and perform. Our college preparatory curriculum develops writers and has built a tight-knit community. Our school develops students who can think analytically and write creatively. Our arts programming builds on our 25 years of experience in visual, performing arts and music on a middle school level. We partner with New Audience and the Whitney Museum as cultural partners. We are a International Baccalaureate (IB) candidate school that offers opportunities to take college courses at neighboring universities.",
+                    text = school.overviewParagraph.toString(),
                     style = MaterialTheme.typography.body2,
                     textAlign = TextAlign.Justify,
                     modifier = Modifier.padding(vertical = dimensionResource(id = R.dimen.dimen_8_dp))
@@ -52,7 +68,7 @@ fun SchoolDetailScreen() {
                     )
                 )
                 Text(
-                    text = stringResource(id = R.string.location_TEXT),
+                    text = school.academicopportunities1.toString(),
                     modifier = Modifier.padding(
                         vertical = dimensionResource(
                             id = R.dimen.dimen_8_dp
@@ -60,7 +76,7 @@ fun SchoolDetailScreen() {
                     )
                 )
                 Text(
-                    text = "10 East 15th Street, Manhattan NY 10003 (40.736526, -73.992727)",
+                    text = school.location.toString(),
                     modifier = Modifier.padding(
                         vertical = dimensionResource(
                             id = R.dimen.dimen_8_dp

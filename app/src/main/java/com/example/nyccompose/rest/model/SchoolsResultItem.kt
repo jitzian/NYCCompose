@@ -57,7 +57,7 @@ class SchoolsResultItem {
     var councilDistrict: String? = null
     @SerializedName("dbn")
     @Expose
-    var dbn: String? = null
+    var dbn: String = ""
     @SerializedName("directions1")
     @Expose
     var directions1: String? = null

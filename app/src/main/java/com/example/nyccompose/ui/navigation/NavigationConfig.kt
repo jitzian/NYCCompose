@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import com.example.nyccompose.schools.detail.view.SchoolDetailScreen
+import com.example.nyccompose.schools.detail.view.SchoolDetailScreenState
 import com.example.nyccompose.schools.main.view.MainSchoolScreenState
 
 @ExperimentalFoundationApi
@@ -35,7 +36,7 @@ private fun NavGraphBuilder.schoolsNav(navController: NavController) {
     composable(NavItem.ContentType(Feature.SCHOOLS)) {
         MainSchoolScreenState(
             onSchoolClick = { school ->
-                school.dbn?.let { safeDbn ->
+                school.dbn.let { safeDbn ->
                     navController.navigate(
                         NavItem.ContentDetail(Feature.SCHOOLS).createRoute(safeDbn)
                     )
@@ -45,7 +46,8 @@ private fun NavGraphBuilder.schoolsNav(navController: NavController) {
     }
 
     composable(NavItem.ContentDetail(Feature.SCHOOLS)) { backStackEntry ->
-        SchoolDetailScreen()
+        //SchoolDetailScreen()
+        SchoolDetailScreenState()
     }
 }
 
