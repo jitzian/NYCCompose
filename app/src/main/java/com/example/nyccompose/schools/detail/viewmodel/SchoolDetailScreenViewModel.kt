@@ -31,7 +31,7 @@ class SchoolDetailViewModel(savedStateHandle: SavedStateHandle) : BaseViewModel(
                         it.dbn == dbn
                     }
                     if (listOfSchools.isNotEmpty()) {
-                        _state.value = UIState.School(school = listOfSchools.first())
+                        _state.value = UIState.Success(school = listOfSchools.first())
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "init:${e.message}")
@@ -45,7 +45,7 @@ class SchoolDetailViewModel(savedStateHandle: SavedStateHandle) : BaseViewModel(
 
     sealed class UIState {
         object Loading : UIState()
-        class School(val school: SchoolsResultItem) : UIState()
+        class Success(val school: SchoolsResultItem) : UIState()
         class Error(val message: String) : UIState()
     }
 

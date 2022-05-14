@@ -31,9 +31,9 @@ fun SchoolDetailScreenState(
         is SchoolDetailViewModel.UIState.Loading -> {
 
         }
-        is SchoolDetailViewModel.UIState.School -> {
+        is SchoolDetailViewModel.UIState.Success -> {
             SchoolDetailScreen(
-                school = (state as SchoolDetailViewModel.UIState.School).school,
+                school = (state as SchoolDetailViewModel.UIState.Success).school,
                  onUpClick = onUpClick
             )
         }
@@ -49,7 +49,9 @@ fun SchoolDetailScreenState(
 fun SchoolDetailScreen(school: SchoolsResultItem,
                        onUpClick: () -> Unit) {
     NYCApp {
-        SchoolDetailScaffold(onUpClick = onUpClick) {
+        SchoolDetailScaffoldState(
+            onUpClick = onUpClick
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
