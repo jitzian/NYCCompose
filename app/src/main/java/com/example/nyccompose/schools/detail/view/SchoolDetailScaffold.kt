@@ -16,13 +16,15 @@ import com.example.nyccompose.ui.common.MainAppBar
 
 @Composable
 fun SchoolDetailScaffold(
+    onUpClick: () -> Unit,
     content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold(
         topBar = {
             MainAppBar(
                 title = "Detail of School",
-                showBackButton = true
+                showBackButton = true,
+                onUpClick = onUpClick
             )
         },
         floatingActionButton = {

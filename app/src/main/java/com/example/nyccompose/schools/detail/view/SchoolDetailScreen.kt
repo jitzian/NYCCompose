@@ -21,6 +21,7 @@ import com.example.nyccompose.ui.common.error.ConnectivityError
 
 @Composable
 fun SchoolDetailScreenState(
+    onUpClick: () -> Unit,
     schoolViewModel: SchoolDetailViewModel = viewModel()
 ) {
 
@@ -31,7 +32,10 @@ fun SchoolDetailScreenState(
 
         }
         is SchoolDetailViewModel.UIState.School -> {
-            SchoolDetailScreen(school = (state as SchoolDetailViewModel.UIState.School).school)
+            SchoolDetailScreen(
+                school = (state as SchoolDetailViewModel.UIState.School).school,
+                 onUpClick = onUpClick
+            )
         }
         is SchoolDetailViewModel.UIState.Error -> {
             ConnectivityError(message = (state as SchoolDetailViewModel.UIState.Error).message)
@@ -42,9 +46,10 @@ fun SchoolDetailScreenState(
 
 
 @Composable
-fun SchoolDetailScreen(school: SchoolsResultItem) {
+fun SchoolDetailScreen(school: SchoolsResultItem,
+                       onUpClick: () -> Unit) {
     NYCApp {
-        SchoolDetailScaffold {
+        SchoolDetailScaffold(onUpClick = onUpClick) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()

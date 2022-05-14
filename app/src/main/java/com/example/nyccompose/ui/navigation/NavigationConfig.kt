@@ -10,7 +10,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
-import com.example.nyccompose.schools.detail.view.SchoolDetailScreen
 import com.example.nyccompose.schools.detail.view.SchoolDetailScreenState
 import com.example.nyccompose.schools.main.view.MainSchoolScreenState
 
@@ -45,9 +44,11 @@ private fun NavGraphBuilder.schoolsNav(navController: NavController) {
         )
     }
 
-    composable(NavItem.ContentDetail(Feature.SCHOOLS)) { backStackEntry ->
-        //SchoolDetailScreen()
-        SchoolDetailScreenState()
+    composable(NavItem.ContentDetail(Feature.SCHOOLS)) {
+        SchoolDetailScreenState(
+            onUpClick = {
+                navController.navigateUp()
+            })
     }
 }
 

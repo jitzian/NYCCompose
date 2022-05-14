@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 fun MainAppBar(
     title: String,
     showBackButton: Boolean = false,
-
+    onUpClick: (() -> Unit)? = null
 ) {
     if (showBackButton) {
         TopAppBar(
@@ -16,7 +16,7 @@ fun MainAppBar(
                 Text(text = title)
             },
             navigationIcon = {
-                ArrowBackIcon()
+                onUpClick?.let { ArrowBackIcon(it) }
             }
         )
     } else {
