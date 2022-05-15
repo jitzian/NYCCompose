@@ -32,6 +32,8 @@ class SchoolDetailViewModel(savedStateHandle: SavedStateHandle) : BaseViewModel(
                     }
                     if (listOfSchools.isNotEmpty()) {
                         _state.value = UIState.Success(school = listOfSchools.first())
+                    } else {
+                        _state.value = UIState.Error(message = "No data available")
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "init:${e.message}")
