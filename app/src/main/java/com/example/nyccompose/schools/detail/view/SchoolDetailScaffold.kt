@@ -48,25 +48,29 @@ fun SchoolDetailScaffoldState(
 fun SchoolDetailScaffold(
     onUpClick: () -> Unit,
     content: @Composable (PaddingValues) -> Unit,
-    school: SchoolsResultItem
+    school: SchoolsResultItem? = null,
+    title: String = stringResource(id = R.string.detail_of_school_TEXT)
 ) {
     val context = LocalContext.current
     Scaffold(
         topBar = {
             MainAppBar(
-                title = stringResource(id = R.string.detail_of_school_TEXT),
+                title = title,
                 showBackButton = true,
                 onUpClick = onUpClick
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = {
-                shareSchool(context, school)
-            }) {
-                Icon(
-                    imageVector = Icons.Default.Share,
-                    contentDescription = stringResource(id = R.string.share_school_details_TEXT)
-                )
+            school?.let { safeSchool ->
+
+                FloatingActionButton(onClick = {
+                    shareSchool(context, safeSchool)
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Share,
+                        contentDescription = stringResource(id = R.string.share_school_details_TEXT)
+                    )
+                }
             }
         },
         content = content
