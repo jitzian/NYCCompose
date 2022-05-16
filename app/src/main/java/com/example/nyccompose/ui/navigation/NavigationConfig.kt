@@ -13,6 +13,7 @@ import androidx.navigation.navigation
 import coil.annotation.ExperimentalCoilApi
 import com.example.nyccompose.schools.detail.view.SchoolDetailScreenState
 import com.example.nyccompose.schools.main.view.MainSchoolScreenState
+import com.example.nyccompose.schools.scores.view.ScoresScreenState
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
@@ -24,9 +25,10 @@ fun NavigationConfig() {
     NavHost(
         navController = navController,
         //startDestination = NavItem.ContentType(Feature.SCHOOLS).route
-    startDestination = Feature.SCHOOLS.route
+        startDestination = Feature.SCHOOLS.route
     ) {
         schoolsNav(navController)
+        scoresNav(navController)
     }
 }
 
@@ -59,6 +61,21 @@ private fun NavGraphBuilder.schoolsNav(navController: NavController) {
         }
     }
 
+}
+
+@ExperimentalCoilApi
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
+private fun NavGraphBuilder.scoresNav(navController: NavController) {
+
+    navigation(
+        startDestination = NavItem.ContentType(Feature.SCORES).route,
+        route = Feature.SCORES.route
+    ) {
+        composable(NavItem.ContentType(Feature.SCORES)) {
+            ScoresScreenState(onUpClick = { navController.navigateUp() })
+        }
+    }
 }
 
 private fun NavGraphBuilder.composable(
