@@ -33,7 +33,10 @@ class ScoresScreenViewModel : BaseViewModel() {
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "fetchScores::${e.message}")
-                _state.value = UIState.Error(message = "An error occurred while fetching the data")
+
+                _state.value = UIState.Error(message = e.message ?: run {
+                    "An error occurred while fetching the data"
+                })
             }
         }
     }

@@ -15,6 +15,7 @@ import com.example.nyccompose.schools.main.viewmodel.MainViewModel
 import com.example.nyccompose.ui.app.NYCApp
 import com.example.nyccompose.ui.common.MainAppBar
 import com.example.nyccompose.ui.common.error.ConnectivityError
+import com.example.nyccompose.ui.common.loading.LoadingScreen
 
 @ExperimentalMaterialApi
 @Composable
@@ -26,8 +27,8 @@ fun MainSchoolScreenState(
     mainViewModel.fetchData()
 
     when (data) {
-        is MainViewModel.UIState.Empty -> {
-            ConnectivityError(message = stringResource(id = R.string.no_data_available_TEXT))
+        is MainViewModel.UIState.Loading -> {
+            LoadingScreen()
         }
         is MainViewModel.UIState.Success -> {
             MainSchoolsScreenScreen(

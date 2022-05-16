@@ -18,6 +18,7 @@ import com.example.nyccompose.rest.model.SchoolsResultItem
 import com.example.nyccompose.schools.detail.viewmodel.SchoolDetailViewModel
 import com.example.nyccompose.ui.app.NYCApp
 import com.example.nyccompose.ui.common.error.ConnectivityError
+import com.example.nyccompose.ui.common.loading.LoadingScreen
 
 @Composable
 fun SchoolDetailScreenState(
@@ -29,12 +30,12 @@ fun SchoolDetailScreenState(
 
     when (state) {
         is SchoolDetailViewModel.UIState.Loading -> {
-
+            LoadingScreen()
         }
         is SchoolDetailViewModel.UIState.Success -> {
             SchoolDetailScreen(
                 school = (state as SchoolDetailViewModel.UIState.Success).school,
-                 onUpClick = onUpClick
+                onUpClick = onUpClick
             )
         }
         is SchoolDetailViewModel.UIState.Error -> {
@@ -46,8 +47,10 @@ fun SchoolDetailScreenState(
 
 
 @Composable
-fun SchoolDetailScreen(school: SchoolsResultItem,
-                       onUpClick: () -> Unit) {
+fun SchoolDetailScreen(
+    school: SchoolsResultItem,
+    onUpClick: () -> Unit
+) {
     NYCApp {
         SchoolDetailScaffoldState(
             onUpClick = onUpClick
