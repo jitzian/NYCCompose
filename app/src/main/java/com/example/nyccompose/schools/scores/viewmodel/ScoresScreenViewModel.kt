@@ -2,7 +2,7 @@ package com.example.nyccompose.schools.scores.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.example.nyccompose.BaseViewModel
+import com.example.nyccompose.base.BaseViewModel
 import com.example.nyccompose.constants.GlobalConstants
 import com.example.nyccompose.rest.model.ScoresResultItem
 import kotlinx.coroutines.Dispatchers

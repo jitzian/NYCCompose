@@ -2,7 +2,7 @@ package com.example.nyccompose.schools.main.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.example.nyccompose.BaseViewModel
+import com.example.nyccompose.base.BaseViewModel
 import com.example.nyccompose.rest.model.SchoolsResult
 import com.example.nyccompose.rest.model.ScoresResult
 import com.example.nyccompose.utils.safeLet

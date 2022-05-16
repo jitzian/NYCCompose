@@ -3,7 +3,7 @@ package com.example.nyccompose.schools.detail.viewmodel
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.example.nyccompose.BaseViewModel
+import com.example.nyccompose.base.BaseViewModel
 import com.example.nyccompose.constants.GlobalConstants
 import com.example.nyccompose.rest.model.SchoolsResultItem
 import com.example.nyccompose.ui.navigation.NavArg

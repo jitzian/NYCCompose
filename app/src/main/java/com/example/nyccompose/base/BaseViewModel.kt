@@ -1,4 +1,4 @@
-package com.example.nyccompose
+package com.example.nyccompose.base
 
 import androidx.lifecycle.ViewModel
 import com.example.nyccompose.constants.GlobalConstants
