@@ -18,6 +18,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.nyccompose.R
 
+/***
+ * Reference: https://www.jetpackcompose.net/jetpack-compose-progress-indicator-progressbar
+ **/
+
 @Composable
 @Preview(showBackground = true)
 fun LoadingScreen() {
@@ -28,7 +32,7 @@ fun LoadingScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        val progressValue = 0.75f
+        val progressValue = 1f
         val infiniteTransition = rememberInfiniteTransition()
 
         val progressAnimationValue by infiniteTransition.animateFloat(
