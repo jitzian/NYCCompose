@@ -3,13 +3,9 @@ package com.example.nyccompose.ui.navigation
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
+import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
 import coil.annotation.ExperimentalCoilApi
 import com.example.nyccompose.schools.detail.view.SchoolDetailScreenState
 import com.example.nyccompose.schools.main.view.MainSchoolScreenState
@@ -20,8 +16,7 @@ import com.example.nyccompose.schools.scores.view.ScoresScreenState
 @ExperimentalCoilApi
 @Composable
 //TODO: Rename this...
-fun NavigationConfig() {
-    val navController = rememberNavController()
+fun NavigationConfig(navController: NavHostController) {
     NavHost(
         navController = navController,
         //startDestination = NavItem.ContentType(Feature.SCHOOLS).route
@@ -38,22 +33,22 @@ fun NavigationConfig() {
 private fun NavGraphBuilder.schoolsNav(navController: NavController) {
 
     navigation(
-        startDestination = NavItem.ContentType(Feature.SCHOOLS).route,
+        startDestination = NavCommand.ContentType(Feature.SCHOOLS).route,
         route = Feature.SCHOOLS.route
     ) {
-        composable(NavItem.ContentType(Feature.SCHOOLS)) {
+        composable(NavCommand.ContentType(Feature.SCHOOLS)) {
             MainSchoolScreenState(
                 onSchoolClick = { school ->
                     school.dbn.let { safeDbn ->
                         navController.navigate(
-                            NavItem.ContentDetail(Feature.SCHOOLS).createRoute(safeDbn)
+                            NavCommand.ContentDetail(Feature.SCHOOLS).createRoute(safeDbn)
                         )
                     }
                 }
             )
         }
 
-        composable(NavItem.ContentDetail(Feature.SCHOOLS)) {
+        composable(NavCommand.ContentDetail(Feature.SCHOOLS)) {
             SchoolDetailScreenState(
                 onUpClick = {
                     navController.navigateUp()
@@ -69,17 +64,17 @@ private fun NavGraphBuilder.schoolsNav(navController: NavController) {
 private fun NavGraphBuilder.scoresNav(navController: NavController) {
 
     navigation(
-        startDestination = NavItem.ContentType(Feature.SCORES).route,
+        startDestination = NavCommand.ContentType(Feature.SCORES).route,
         route = Feature.SCORES.route
     ) {
-        composable(NavItem.ContentType(Feature.SCORES)) {
+        composable(NavCommand.ContentType(Feature.SCORES)) {
             ScoresScreenState(onUpClick = { navController.navigateUp() })
         }
     }
 }
 
 private fun NavGraphBuilder.composable(
-    navItem: NavItem,
+    navItem: NavCommand,
     content: @Composable (NavBackStackEntry) -> (Unit)
 ) {
     composable(

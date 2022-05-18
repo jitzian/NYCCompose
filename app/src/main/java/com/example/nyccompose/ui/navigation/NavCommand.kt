@@ -1,19 +1,32 @@
 package com.example.nyccompose.ui.navigation
 
+import androidx.annotation.StringRes
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.nyccompose.R
-import com.example.nyccompose.rest.model.SchoolsResultItem
 
-sealed class NavItem(
+enum class NavItem(
+    val navCommand: NavCommand,
+    val icon: ImageVector,
+    @StringRes val title: Int
+) {
+    SCHOOLS(NavCommand.ContentType(Feature.SCHOOLS), Icons.Default.Face, R.string.schools_TEXT),
+    SCORES(NavCommand.ContentType(Feature.SCORES), Icons.Default.Favorite, R.string.scores_TEXT)
+}
+
+sealed class NavCommand(
     internal val feature: Feature,
     internal val subRoute: String = "home",
     private val navArgs: List<NavArg> = emptyList()
 ) {
 
-    class ContentType(feature: Feature) : NavItem(feature)
+    class ContentType(feature: Feature) : NavCommand(feature)
 
-    class ContentDetail(feature: Feature) : NavItem(feature, "detail", listOf(NavArg.Dbn)) {
+    class ContentDetail(feature: Feature) : NavCommand(feature, "detail", listOf(NavArg.Dbn)) {
         fun createRoute(dbn: String) = "${feature.route}/$subRoute/$dbn"
     }
 
