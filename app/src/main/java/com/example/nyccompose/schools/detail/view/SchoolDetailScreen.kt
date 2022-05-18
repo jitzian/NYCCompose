@@ -16,7 +16,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.nyccompose.R
 import com.example.nyccompose.rest.model.SchoolsResultItem
 import com.example.nyccompose.schools.detail.viewmodel.SchoolDetailViewModel
-import com.example.nyccompose.ui.app.NYCApp
+import com.example.nyccompose.ui.app.NYCScreen
 import com.example.nyccompose.ui.common.error.ConnectivityError
 import com.example.nyccompose.ui.common.loading.LoadingScreen
 
@@ -51,7 +51,7 @@ fun SchoolDetailScreen(
     school: SchoolsResultItem,
     onUpClick: () -> Unit
 ) {
-    NYCApp {
+    NYCScreen {
         SchoolDetailScaffoldState(
             onUpClick = onUpClick
         ) {

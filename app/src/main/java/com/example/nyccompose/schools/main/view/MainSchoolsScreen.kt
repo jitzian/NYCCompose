@@ -12,7 +12,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.nyccompose.R
 import com.example.nyccompose.rest.model.SchoolsResultItem
 import com.example.nyccompose.schools.main.viewmodel.MainViewModel
-import com.example.nyccompose.ui.app.NYCApp
+import com.example.nyccompose.ui.app.NYCScreen
 import com.example.nyccompose.ui.common.MainAppBar
 import com.example.nyccompose.ui.common.error.ConnectivityError
 import com.example.nyccompose.ui.common.loading.LoadingScreen
@@ -48,7 +48,7 @@ fun MainSchoolsScreenScreen(
     schools: List<SchoolsResultItem>,
     onSchoolClick: (SchoolsResultItem) -> Unit
 ) {
-    NYCApp {
+    NYCScreen {
         Scaffold(
             topBar = {
                 MainAppBar(stringResource(id = R.string.new_york_cities_schools_TEXT))
