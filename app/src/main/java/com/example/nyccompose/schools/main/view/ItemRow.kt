@@ -23,7 +23,10 @@ fun ItemRow(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(dimensionResource(id = R.dimen.dimen_16_dp))
+            .padding(
+                horizontal = dimensionResource(id = R.dimen.dimen_16_dp),
+                vertical = dimensionResource(id = R.dimen.dimen_8_dp)
+            )
             .clickable {
                 onSchoolClick(data)
             },
