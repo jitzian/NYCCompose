@@ -14,7 +14,7 @@ import com.example.nyccompose.R
 import com.example.nyccompose.rest.model.ScoresResultItem
 import com.example.nyccompose.schools.detail.view.SchoolDetailScaffold
 import com.example.nyccompose.schools.scores.viewmodel.ScoresScreenViewModel
-import com.example.nyccompose.ui.app.NYCApp
+import com.example.nyccompose.ui.app.NYCScreen
 import com.example.nyccompose.ui.common.error.ConnectivityError
 
 //TODO: Rename file
@@ -49,7 +49,7 @@ fun ScoresScreen(
     scores: List<ScoresResultItem>,
     onUpClick: () -> Unit
 ) {
-    NYCApp {
+    NYCScreen {
         SchoolDetailScaffold(
             onUpClick = onUpClick,
             content = {

@@ -12,11 +12,11 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.nyccompose.R
-import com.example.nyccompose.ui.app.NYCApp
+import com.example.nyccompose.ui.app.NYCScreen
 
 @Composable
 fun ConnectivityError(message: String?) {
-    NYCApp {
+    NYCScreen {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
