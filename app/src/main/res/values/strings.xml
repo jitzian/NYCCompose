@@ -13,4 +13,8 @@
     <string name="loading_dot_dot_dot_TEXT">Loading ...</string>
     <string name="schools_TEXT">Schools</string>
     <string name="scores_TEXT">Scores</string>
+    <string name="sat_test_takers_TEXT">SAT Test takers</string>
+    <string name="reading_score_TEXT">Reading Score</string>
+    <string name="math_score_TEXT">Math Score</string>
+    <string name="writing_score_TEXT">Writing Score</string>
 </resources>

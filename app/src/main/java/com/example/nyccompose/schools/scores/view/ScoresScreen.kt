@@ -16,8 +16,7 @@ import com.example.nyccompose.schools.detail.view.SchoolDetailScaffold
 import com.example.nyccompose.schools.scores.viewmodel.ScoresScreenViewModel
 import com.example.nyccompose.ui.app.NYCScreen
 import com.example.nyccompose.ui.common.error.ConnectivityError
-
-//TODO: Rename file
+import com.example.nyccompose.ui.common.loading.LoadingScreen
 
 @Composable
 fun ScoresScreenState(
@@ -30,7 +29,7 @@ fun ScoresScreenState(
 
     when (data) {
         is ScoresScreenViewModel.UIState.Loading -> {
-
+            LoadingScreen()
         }
         is ScoresScreenViewModel.UIState.Success -> {
             ScoresScreen(
