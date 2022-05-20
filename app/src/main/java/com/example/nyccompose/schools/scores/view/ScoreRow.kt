@@ -19,7 +19,10 @@ fun ScoreRow(data: ScoresResultItem) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(dimensionResource(id = R.dimen.dimen_16_dp)),
+            .padding(
+                horizontal = dimensionResource(id = R.dimen.dimen_16_dp),
+                vertical = dimensionResource(id = R.dimen.dimen_8_dp)
+            ),
         elevation = dimensionResource(id = R.dimen.dimen_4_dp)
     ) {
 
@@ -62,7 +65,10 @@ fun ScoreRow(data: ScoresResultItem) {
                 leftColumnContent = stringResource(id = R.string.writing_score_TEXT),
                 rightColumnContent = data.writingScore
                     ?: stringResource(id = R.string.no_data_available_TEXT),
-                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.dimen_8_dp))
+                modifier = Modifier.padding(
+                    top = dimensionResource(id = R.dimen.dimen_8_dp),
+                    bottom = dimensionResource(id = R.dimen.dimen_8_dp)
+                )
             )
         }
     }
