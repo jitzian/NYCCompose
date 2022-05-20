@@ -9,34 +9,29 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import com.example.nyccompose.ui.navigation.AppBottomNavigation
 import com.example.nyccompose.ui.navigation.NavigationConfig
 import com.example.nyccompose.ui.theme.NYCComposeTheme
-import com.example.nyccompose.utils.navigatePoppingUpToStartDestination
 
 @ExperimentalCoilApi
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
 fun NYCApp() {
-    val navController = rememberNavController()
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route ?: ""
+    val appState = rememberAppState()
 
     NYCScreen {
         Scaffold(
             bottomBar = {
-                AppBottomNavigation(currentRoute = currentRoute, onNavItemClick = {
-                    navController.navigatePoppingUpToStartDestination(it.navCommand.route)
+                AppBottomNavigation(currentRoute = appState.currentRoute, onNavItemClick = {
+
+                    appState.onNavItemClick(it)
                 })
             }) { padding ->
             Box(modifier = Modifier.padding(padding)) {
-                NavigationConfig(navController)
+                NavigationConfig(appState.navController)
             }
         }
     }
