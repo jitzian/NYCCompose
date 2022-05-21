@@ -17,4 +17,5 @@
     <string name="reading_score_TEXT">Reading Score</string>
     <string name="math_score_TEXT">Math Score</string>
     <string name="writing_score_TEXT">Writing Score</string>
+    <string name="go_to_top_TEXT">Go to Top</string>
 </resources>
