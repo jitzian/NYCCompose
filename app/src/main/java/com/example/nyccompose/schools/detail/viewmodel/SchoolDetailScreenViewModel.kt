@@ -16,7 +16,7 @@ import kotlinx.coroutines.withTimeout
 
 class SchoolDetailViewModel(savedStateHandle: SavedStateHandle) : BaseViewModel() {
 
-    private val dbn = savedStateHandle.get<String>(NavArg.Dbn.key) ?: 0
+    private val dbn = savedStateHandle.get<String>(NavArg.Dbn.key) ?: throw IllegalStateException()
 
     private val _state = MutableStateFlow<UIState>(UIState.Loading)
     val state: StateFlow<UIState>
