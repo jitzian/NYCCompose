@@ -14,10 +14,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class MainViewModel : BaseViewModel() {
+class MainSchoolViewModel : BaseViewModel() {
 
     init {
-        TAG = MainViewModel::class.java.simpleName
+        TAG = MainSchoolViewModel::class.java.simpleName
     }
 
     private val _data = MutableStateFlow<UIState>(UIState.Loading)

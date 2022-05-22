@@ -11,7 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.nyccompose.R
 import com.example.nyccompose.rest.model.SchoolsResultItem
-import com.example.nyccompose.schools.main.viewmodel.MainViewModel
+import com.example.nyccompose.schools.main.viewmodel.MainSchoolViewModel
 import com.example.nyccompose.ui.app.NYCScreen
 import com.example.nyccompose.ui.common.MainAppBar
 import com.example.nyccompose.ui.common.error.ConnectivityError
@@ -21,23 +21,23 @@ import kotlinx.coroutines.launch
 @ExperimentalMaterialApi
 @Composable
 fun MainSchoolScreenState(
-    mainViewModel: MainViewModel = viewModel(),
+    mainSchoolViewModel: MainSchoolViewModel = viewModel(),
     onSchoolClick: (SchoolsResultItem) -> Unit
 ) {
-    val data by mainViewModel.data.collectAsState()
-    mainViewModel.fetchData()
+    val data by mainSchoolViewModel.data.collectAsState()
+    mainSchoolViewModel.fetchData()
 
     when (data) {
-        is MainViewModel.UIState.Loading -> {
+        is MainSchoolViewModel.UIState.Loading -> {
             LoadingScreen()
         }
-        is MainViewModel.UIState.Success -> {
+        is MainSchoolViewModel.UIState.Success -> {
             MainSchoolsScreenScreen(
-                schools = (data as MainViewModel.UIState.Success).listOfSchools,
+                schools = (data as MainSchoolViewModel.UIState.Success).listOfSchools,
                 onSchoolClick = onSchoolClick
             )
         }
-        is MainViewModel.UIState.Error -> {
+        is MainSchoolViewModel.UIState.Error -> {
             ConnectivityError(message = stringResource(id = R.string.an_error_occurred_TEXT))
         }
     }
