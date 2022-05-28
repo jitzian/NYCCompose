@@ -1,14 +1,17 @@
 package com.example.nyccompose.schools.main.view
 
+import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreTime
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -53,6 +56,17 @@ fun ItemRow(
                     ?: stringResource(id = R.string.no_data_available_TEXT),
                 style = MaterialTheme.typography.body2
             )
+            IconButton(
+                onClick = {
+                    /*TODO*/
+                },
+                modifier = Modifier.align(alignment = Alignment.End)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.MoreVert,
+                    contentDescription = stringResource(id = R.string.more_actions_TEXT)
+                )
+            }
         }
     }
 }
