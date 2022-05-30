@@ -3,7 +3,7 @@ package com.example.nyccompose.rest.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class SchoolsResultItem {
+open class SchoolsResultItem {
     @SerializedName("academicopportunities1")
     @Expose
     var academicopportunities1: String? = null

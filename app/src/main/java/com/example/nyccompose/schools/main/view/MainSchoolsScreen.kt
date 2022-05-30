@@ -14,6 +14,7 @@ import com.example.nyccompose.rest.model.SchoolsResultItem
 import com.example.nyccompose.schools.main.viewmodel.MainSchoolViewModel
 import com.example.nyccompose.ui.app.NYCScreen
 import com.example.nyccompose.ui.common.MainAppBar
+import com.example.nyccompose.ui.common.SchoolItemBottomSheetPreview
 import com.example.nyccompose.ui.common.error.ConnectivityError
 import com.example.nyccompose.ui.common.loading.LoadingScreen
 import kotlinx.coroutines.launch
@@ -34,7 +35,8 @@ fun MainSchoolScreenState(
         is MainSchoolViewModel.UIState.Success -> {
             MainSchoolsScreenScreen(
                 schools = (data as MainSchoolViewModel.UIState.Success).listOfSchools,
-                onSchoolClick = onSchoolClick
+                onSchoolClick = onSchoolClick,
+                onItemMore = onSchoolClick
             )
         }
         is MainSchoolViewModel.UIState.Error -> {
@@ -45,9 +47,10 @@ fun MainSchoolScreenState(
 
 @ExperimentalMaterialApi
 @Composable
-fun MainSchoolsScreenScreen(
-    schools: List<SchoolsResultItem>,
-    onSchoolClick: (SchoolsResultItem) -> Unit
+fun <T : SchoolsResultItem> MainSchoolsScreenScreen(
+    schools: List<T>,
+    onSchoolClick: (T) -> Unit,
+    onItemMore: (T) -> Unit
 ) {
     val state = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -78,9 +81,35 @@ fun MainSchoolsScreenScreen(
             },
             floatingActionButtonPosition = FabPosition.Center
         ) {
-            LazyColumn(state = state) {
-                items(schools) { school ->
-                    ItemRow(data = school, onSchoolClick = onSchoolClick)
+
+            var bottomSheetItem by remember {
+                mutableStateOf<T?>(null)
+            }
+
+            val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+
+            ModalBottomSheetLayout(
+                sheetContent = {
+                    SchoolItemBottomSheetPreview(
+                        item = bottomSheetItem,
+                        onGoToDetail = onSchoolClick
+                    )
+                },
+                sheetState = sheetState
+            ) {
+                LazyColumn(state = state) {
+                    items(schools) { school ->
+                        ItemRow(
+                            data = school,
+                            onSchoolClick = onSchoolClick,
+                            onItemMore = {
+                                bottomSheetItem = it
+                                coroutineScope.launch {
+                                    sheetState.show()
+                                }
+                            }
+                        )
+                    }
                 }
             }
         }

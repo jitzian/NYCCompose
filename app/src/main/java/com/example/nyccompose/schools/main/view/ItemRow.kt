@@ -1,14 +1,11 @@
 package com.example.nyccompose.schools.main.view
 
-import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreTime
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,9 +16,10 @@ import com.example.nyccompose.R
 import com.example.nyccompose.rest.model.SchoolsResultItem
 
 @Composable
-fun ItemRow(
-    data: SchoolsResultItem,
-    onSchoolClick: (SchoolsResultItem) -> Unit
+fun <T: SchoolsResultItem> ItemRow(
+    data: T,
+    onSchoolClick: (T) -> Unit,
+    onItemMore: (T) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -58,7 +56,7 @@ fun ItemRow(
             )
             IconButton(
                 onClick = {
-                    /*TODO*/
+                    onItemMore(data)
                 },
                 modifier = Modifier.align(alignment = Alignment.End)
             ) {
