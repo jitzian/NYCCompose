@@ -62,8 +62,9 @@ fun <T : SchoolsResultItem> MainSchoolsScreenScreen(
             state.firstVisibleItemIndex > 0
         }
     }
+    //This is for handling the state / visibility of the BottomSheet
     val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
-    val lifecycleOwner = LocalLifecycleOwner.current
+    /*val lifecycleOwner = LocalLifecycleOwner.current
     val backDispatcher =
         requireNotNull(LocalOnBackPressedDispatcherOwner.current).onBackPressedDispatcher
 
@@ -83,6 +84,12 @@ fun <T : SchoolsResultItem> MainSchoolsScreenScreen(
     DisposableEffect(key1 = backDispatcher, key2 = lifecycleOwner) {
         backDispatcher.addCallback(lifecycleOwner, backCallback)
         onDispose { backCallback.remove() }
+    }*/
+
+    BackPressedHandler(sheetState.isVisible) {
+        coroutineScope.launch {
+            sheetState.hide()
+        }
     }
 
     NYCScreen {
@@ -146,6 +153,24 @@ fun <T : SchoolsResultItem> MainSchoolsScreenScreen(
 }
 
 @Composable
-fun BackPressedHandler() {
+fun BackPressedHandler(enabled: Boolean, onBack: () -> Unit) {
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val backDispatcher =
+        requireNotNull(LocalOnBackPressedDispatcherOwner.current).onBackPressedDispatcher
 
+    val backCallback = remember {
+        object : OnBackPressedCallback(enabled) {
+            override fun handleOnBackPressed() {
+                onBack()
+            }
+        }
+    }
+    SideEffect {
+        backCallback.isEnabled = enabled
+    }
+
+    DisposableEffect(key1 = backDispatcher, key2 = lifecycleOwner) {
+        backDispatcher.addCallback(lifecycleOwner, backCallback)
+        onDispose { backCallback.remove() }
+    }
 }
