@@ -59,6 +59,7 @@ fun <T : SchoolsResultItem> MainSchoolsScreenScreen(
             state.firstVisibleItemIndex > 0
         }
     }
+    val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
 
     NYCScreen {
         Scaffold(
@@ -86,13 +87,17 @@ fun <T : SchoolsResultItem> MainSchoolsScreenScreen(
                 mutableStateOf<T?>(null)
             }
 
-            val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
-
             ModalBottomSheetLayout(
                 sheetContent = {
                     SchoolItemBottomSheetPreview(
                         item = bottomSheetItem,
-                        onGoToDetail = onSchoolClick
+                        //onGoToDetail = onSchoolClick
+                        onGoToDetail = {
+                            coroutineScope.launch {
+                                sheetState.hide()
+                                onSchoolClick(it)
+                            }
+                        }
                     )
                 },
                 sheetState = sheetState
