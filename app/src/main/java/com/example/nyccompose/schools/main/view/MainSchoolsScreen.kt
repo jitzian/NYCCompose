@@ -64,27 +64,6 @@ fun <T : SchoolsResultItem> MainSchoolsScreenScreen(
     }
     //This is for handling the state / visibility of the BottomSheet
     val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
-    /*val lifecycleOwner = LocalLifecycleOwner.current
-    val backDispatcher =
-        requireNotNull(LocalOnBackPressedDispatcherOwner.current).onBackPressedDispatcher
-
-    val enabled = sheetState.isVisible
-
-    val backCallback = remember {
-        object : OnBackPressedCallback(enabled) {
-            override fun handleOnBackPressed() {
-                coroutineScope.launch { sheetState.hide() }
-            }
-        }
-    }
-    SideEffect {
-        backCallback.isEnabled = enabled
-    }
-
-    DisposableEffect(key1 = backDispatcher, key2 = lifecycleOwner) {
-        backDispatcher.addCallback(lifecycleOwner, backCallback)
-        onDispose { backCallback.remove() }
-    }*/
 
     BackPressedHandler(sheetState.isVisible) {
         coroutineScope.launch {
