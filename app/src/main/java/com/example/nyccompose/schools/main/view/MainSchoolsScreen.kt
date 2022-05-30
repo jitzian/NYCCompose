@@ -1,5 +1,7 @@
 package com.example.nyccompose.schools.main.view
 
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -7,6 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.nyccompose.R
@@ -60,6 +63,27 @@ fun <T : SchoolsResultItem> MainSchoolsScreenScreen(
         }
     }
     val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val backDispatcher =
+        requireNotNull(LocalOnBackPressedDispatcherOwner.current).onBackPressedDispatcher
+
+    val enabled = sheetState.isVisible
+
+    val backCallback = remember {
+        object : OnBackPressedCallback(enabled) {
+            override fun handleOnBackPressed() {
+                coroutineScope.launch { sheetState.hide() }
+            }
+        }
+    }
+    SideEffect {
+        backCallback.isEnabled = enabled
+    }
+
+    DisposableEffect(key1 = backDispatcher, key2 = lifecycleOwner) {
+        backDispatcher.addCallback(lifecycleOwner, backCallback)
+        onDispose { backCallback.remove() }
+    }
 
     NYCScreen {
         Scaffold(
@@ -119,4 +143,9 @@ fun <T : SchoolsResultItem> MainSchoolsScreenScreen(
             }
         }
     }
+}
+
+@Composable
+fun BackPressedHandler() {
+
 }
