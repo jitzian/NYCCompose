@@ -12,3 +12,7 @@ fun <T1 : Any, T2 : Any, T3 : Any, R : Any> safeLet(
 ): R? {
     return if (p1 != null && p2 != null && p3 != null) block(p1, p2, p3) else null
 }
+
+//Reference: https://stackoverflow.com/questions/51782488/how-to-filter-list-base-on-another-list-in-kotlin-java
+fun <T, U> List<T>.intersect(uList: List<U>, filterPredicate: (T, U) -> Boolean) =
+    filter { m -> uList.any { filterPredicate(m, it) } }
