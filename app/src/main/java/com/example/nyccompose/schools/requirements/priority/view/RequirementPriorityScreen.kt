@@ -1,24 +1,26 @@
 package com.example.nyccompose.schools.requirements.priority.view
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberImagePainter
 import com.example.nyccompose.R
 import com.example.nyccompose.schools.requirements.priority.domain.model.RequirementPriority
 import com.example.nyccompose.schools.requirements.priority.viewmodel.RequirementPriorityScreenViewModel
-import com.example.nyccompose.ui.app.NYCScreen
-import com.example.nyccompose.ui.common.MainAppBar
 import com.example.nyccompose.ui.common.loading.LoadingScreen
 
 @Composable
@@ -71,7 +73,18 @@ fun RequirementPriorityItem(data: RequirementPriority) {
             ),
             verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.dimen_8_dp))
         ) {
-
+            Image(
+                painter = rememberImagePainter(
+                    data = "https://img.wallpapersafari.com/desktop/1600/900/22/68/JA7MEV.jpg"
+                ),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .padding(top = dimensionResource(id = R.dimen.dimen_8_dp))
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+                    .clip(RoundedCornerShape(dimensionResource(id = R.dimen.dimen_8_dp)))
+            )
             Text(
                 text = data.schoolName.toString(),
                 style = MaterialTheme.typography.h6
@@ -141,7 +154,10 @@ fun RequirementPriorityItem(data: RequirementPriority) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = dimensionResource(id = R.dimen.dimen_8_dp)),
+                    .padding(
+                        top = dimensionResource(id = R.dimen.dimen_8_dp),
+                        bottom = dimensionResource(id = R.dimen.dimen_8_dp)
+                    ),
                 horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.dimen_8_dp))
             ) {
 

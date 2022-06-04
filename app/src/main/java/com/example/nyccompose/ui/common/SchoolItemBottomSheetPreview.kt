@@ -2,12 +2,14 @@ package com.example.nyccompose.ui.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,11 +28,12 @@ fun <T : SchoolsResultItem> SchoolItemBottomSheetPreview(item: T?, onGoToDetail:
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.dimen_8_dp))
         ) {
             Image(
-                painter = rememberImagePainter(data = "https://www.pngkey.com/png/full/33-334924_free-icons-png-middle-school-icon-png.png"),
+                painter = rememberImagePainter(data = "https://cdn.wallpapersafari.com/20/63/Z8bqck.jpg"),
                 contentDescription = null,
                 modifier = Modifier
                     .width(96.dp)
-                    .aspectRatio(1 / 1.5f)
+                    .height(96.dp)
+                    .clip(RoundedCornerShape(dimensionResource(id = R.dimen.dimen_8_dp)))
             )
             Column(
                 modifier = Modifier.weight(1f),
