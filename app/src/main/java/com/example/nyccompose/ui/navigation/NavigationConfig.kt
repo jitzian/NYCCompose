@@ -81,7 +81,11 @@ fun NavGraphBuilder.requirementPriorityNav(navController: NavController) {
         route = Feature.REQUIREMENTS.route
     ) {
         composable(NavCommand.ContentType(Feature.REQUIREMENTS)) {
-            RequirementPriorityScreenState()
+            RequirementPriorityScreenState(
+                onUpClick = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 }
