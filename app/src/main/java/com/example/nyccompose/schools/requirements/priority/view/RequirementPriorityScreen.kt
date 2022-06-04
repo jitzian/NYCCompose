@@ -19,40 +19,57 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
 import com.example.nyccompose.R
+import com.example.nyccompose.schools.detail.view.SchoolDetailScaffold
 import com.example.nyccompose.schools.requirements.priority.domain.model.RequirementPriority
 import com.example.nyccompose.schools.requirements.priority.viewmodel.RequirementPriorityScreenViewModel
+import com.example.nyccompose.ui.app.NYCScreen
+import com.example.nyccompose.ui.common.error.ConnectivityError
 import com.example.nyccompose.ui.common.loading.LoadingScreen
 
 @Composable
-fun RequirementPriorityScreenState(requirementPriorityScreenViewModel: RequirementPriorityScreenViewModel = viewModel()) {
+fun RequirementPriorityScreenState(
+    onUpClick: () -> Unit,
+    requirementPriorityScreenViewModel: RequirementPriorityScreenViewModel = viewModel()
+) {
     val state by requirementPriorityScreenViewModel.state.collectAsState()
 
-    if (state.isLoading) {
-        LoadingScreen()
+    when (state) {
+        is RequirementPriorityScreenViewModel.UIState.Loading -> {
+            LoadingScreen()
+        }
+        is RequirementPriorityScreenViewModel.UIState.Success -> {
+            RequirementPriorityScreen(
+                listOfRequirements = (state as RequirementPriorityScreenViewModel.UIState.Success).data,
+                onUpClick = onUpClick
+            )
+        }
+        is RequirementPriorityScreenViewModel.UIState.Error -> {
+            ConnectivityError(message = (state as RequirementPriorityScreenViewModel.UIState.Error).message)
+        }
     }
-    RequirementPriorityScreen(listOfRequirements = state.data)
 }
 
 @Composable
-fun RequirementPriorityScreen(listOfRequirements: List<RequirementPriority>) {
-    /*NYCScreen {
-        Scaffold(topBar = {
-            MainAppBar(title = stringResource(id = R.string.schools_scores_TEXT))
-        },
-        content = {
-            LazyColumn {
-                items(listOfRequirements) { item ->
-                    RequirementPriorityItem(item)
-                }
-            }
-        })
-    }*/
-    LazyColumn {
-        items(listOfRequirements) { item ->
-            RequirementPriorityItem(item)
-        }
-    }
+fun RequirementPriorityScreen(
+    listOfRequirements: List<RequirementPriority>,
+    onUpClick: () -> Unit
+) {
 
+    NYCScreen {
+        SchoolDetailScaffold(
+            onUpClick = onUpClick,
+            content = {
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    LazyColumn {
+                        items(listOfRequirements) { item ->
+                            RequirementPriorityItem(item)
+                        }
+                    }
+                }
+            },
+            title = stringResource(id = R.string.schools_scores_TEXT)
+        )
+    }
 }
 
 @Composable

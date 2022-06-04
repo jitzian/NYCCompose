@@ -1,6 +1,5 @@
 package com.example.nyccompose.schools.requirements.priority.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.nyccompose.base.BaseViewModel
 import com.example.nyccompose.constants.GlobalConstants.Companion.MAX_TIME_OUT
@@ -8,12 +7,14 @@ import com.example.nyccompose.schools.requirements.priority.domain.model.Require
 import com.example.nyccompose.utils.safeLet
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class RequirementPriorityScreenViewModel : BaseViewModel() {
 
-    private val _state = MutableStateFlow(UIState())
-    val state = _state.asStateFlow()
+    private val _state = MutableStateFlow<UIState>(UIState.Loading)
+    val state: StateFlow<UIState>
+        get() = _state.asStateFlow()
 
     init {
         TAG = RequirementPriorityScreenViewModel::class.java.simpleName
@@ -51,13 +52,17 @@ class RequirementPriorityScreenViewModel : BaseViewModel() {
                                 }
                             }
                         }
-                        _state.value = UIState(isLoading = false, data = listOfRequirementPriority)
+                        if (listOfRequirementPriority.isNotEmpty()) {
+                            _state.value = UIState.Success(data = listOfRequirementPriority)
+                        } else {
+                            _state.value = UIState.Error(message = "No data available")
+                        }
                     }
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "fetchData::${e.message}")
+                _state.value = UIState.Error(message = "${e.message}")
             } catch (toe: TimeoutCancellationException) {
-                Log.e(TAG, "fetchData: ${toe.message}")
+                _state.value = UIState.Error(message = "${toe.message}")
             }
         }
     }
@@ -65,10 +70,10 @@ class RequirementPriorityScreenViewModel : BaseViewModel() {
     private suspend fun fetchSchools() = restApi.fetchSchools()
     private suspend fun fetchScores() = restApi.fetchScores()
 
-    data class UIState(
-        var isLoading: Boolean = true,
-        var isError: Boolean = false,
-        var data: List<RequirementPriority> = emptyList()
-    )
+    sealed class UIState {
+        object Loading : UIState()
+        class Success(val data: List<RequirementPriority> = emptyList()) : UIState()
+        class Error(val message: String) : UIState()
+    }
 
 }
