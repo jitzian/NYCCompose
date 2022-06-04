@@ -2,6 +2,7 @@ package com.example.nyccompose.ui.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Pages
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Score
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -15,7 +16,8 @@ enum class NavItem(
     @StringRes val title: Int
 ) {
     SCHOOLS(NavCommand.ContentType(Feature.SCHOOLS), Icons.Default.School, R.string.schools_TEXT),
-    SCORES(NavCommand.ContentType(Feature.SCORES), Icons.Default.Score, R.string.scores_TEXT)
+    SCORES(NavCommand.ContentType(Feature.SCORES), Icons.Default.Score, R.string.scores_TEXT),
+    REQUIREMENT(NavCommand.ContentType(Feature.REQUIREMENTS), Icons.Default.Pages, R.string.requirements_TEXT)
 }
 
 sealed class NavCommand(

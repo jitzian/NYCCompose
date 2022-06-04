@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import coil.annotation.ExperimentalCoilApi
 import com.example.nyccompose.schools.detail.view.SchoolDetailScreenState
 import com.example.nyccompose.schools.main.view.MainSchoolScreenState
+import com.example.nyccompose.schools.requirements.priority.view.RequirementPriorityScreenState
 import com.example.nyccompose.schools.scores.view.ScoresScreenState
 
 @ExperimentalFoundationApi
@@ -24,6 +25,7 @@ fun NavigationConfig(navController: NavHostController) {
     ) {
         schoolsNav(navController)
         scoresNav(navController)
+        requirementPriorityNav(navController)
     }
 }
 
@@ -69,6 +71,17 @@ private fun NavGraphBuilder.scoresNav(navController: NavController) {
     ) {
         composable(NavCommand.ContentType(Feature.SCORES)) {
             ScoresScreenState(onUpClick = { navController.navigateUp() })
+        }
+    }
+}
+
+fun NavGraphBuilder.requirementPriorityNav(navController: NavController) {
+    navigation(
+        startDestination = NavCommand.ContentType(Feature.REQUIREMENTS).route,
+        route = Feature.REQUIREMENTS.route
+    ) {
+        composable(NavCommand.ContentType(Feature.REQUIREMENTS)) {
+            RequirementPriorityScreenState()
         }
     }
 }
