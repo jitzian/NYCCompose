@@ -10,7 +10,7 @@
     <string name="share_school_details_TEXT">Share School Details</string>
     <string name="detail_of_school_TEXT">Detail of School</string>
     <string name="details_of_scores_TEXT">Details of Scores</string>
-    <string name="loading_dot_dot_dot_TEXT">Loading ...</string>
+    <string name="loading_dot_dot_dot_TEXT">Loading …</string>
     <string name="schools_TEXT">Schools</string>
     <string name="scores_TEXT">Scores</string>
     <string name="sat_test_takers_TEXT">SAT Test takers</string>
